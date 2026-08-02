@@ -1,0 +1,18 @@
+logs
+*.log
+node_modules
+dist
+dist-ssr
+*.local
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+
+# 私人資料夾/內部工具防護:即使日後同步流程失誤整包複製,也不讓這些進版本庫
+鑽孔資料/
+Benson/
+測試檔案/
+.claude/
+.superpowers/
+啟動.bat

@@ -1,0 +1,2397 @@
+// 此檔由 scripts/generateExamples.ts 產生,勿手改;資料來源 scripts/exampleSite.ts
+import type { Borehole } from "../types/borehole";
+
+export const mockBoreholes: Borehole[] = [
+  {
+    "id": "BH-01",
+    "name": "BH-01",
+    "x": 5,
+    "y": 8,
+    "groundElevation": 99.2,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 1.5,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 7,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 7,
+        "bottomDepth": 13.5,
+        "soilType": "CL",
+        "color": "#8a9a5b"
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 19,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 19,
+        "bottomDepth": 26,
+        "soilType": "SM",
+        "color": "#e0c068"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 8
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 11
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 13
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 8
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 6
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 8
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 15
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 18
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 15
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 17
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 33
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 31
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 33
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 30
+      }
+    ]
+  },
+  {
+    "id": "BH-02",
+    "name": "BH-02",
+    "x": 25,
+    "y": 5,
+    "groundElevation": 99.6,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 1.8,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 1.8,
+        "bottomDepth": 7.5,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 14,
+        "soilType": "CL",
+        "color": "#8a9a5b"
+      },
+      {
+        "topDepth": 14,
+        "bottomDepth": 19.5,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 26,
+        "soilType": "SM",
+        "color": "#e0c068"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 5
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 9
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 11
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 13
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 6
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 9
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 6
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 8
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 10
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 16
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 18
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 15
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 31
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 34
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 31
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 33
+      }
+    ]
+  },
+  {
+    "id": "BH-03",
+    "name": "BH-03",
+    "x": 45,
+    "y": 10,
+    "groundElevation": 100.1,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 2,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 2,
+        "bottomDepth": 8,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 8,
+        "bottomDepth": 14.8,
+        "soilType": "CL",
+        "color": "#8a9a5b"
+      },
+      {
+        "topDepth": 14.8,
+        "bottomDepth": 20,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 20,
+        "bottomDepth": 27,
+        "soilType": "SM",
+        "color": "#e0c068"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 3
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 12
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 9
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 11
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 13
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 7
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 9
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 6
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 8
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 19
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 16
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 18
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 15
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 32
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 34
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 31
+      },
+      {
+        "topDepth": 25.5,
+        "bottomDepth": 25.95,
+        "nValue": 33
+      }
+    ]
+  },
+  {
+    "id": "BH-04",
+    "name": "BH-04",
+    "x": 68,
+    "y": 6,
+    "groundElevation": 100.5,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 1.6,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 1.6,
+        "bottomDepth": 8.4,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 8.4,
+        "bottomDepth": 15.2,
+        "soilType": "CL",
+        "color": "#8a9a5b"
+      },
+      {
+        "topDepth": 15.2,
+        "bottomDepth": 20.8,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 20.8,
+        "bottomDepth": 28,
+        "soilType": "SM",
+        "color": "#e0c068"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 6
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 12
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 9
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 11
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 7
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 9
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 6
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 9
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 19
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 16
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 18
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 30
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 32
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 34
+      },
+      {
+        "topDepth": 25.5,
+        "bottomDepth": 25.95,
+        "nValue": 31
+      },
+      {
+        "topDepth": 27,
+        "bottomDepth": 27.45,
+        "nValue": 34
+      }
+    ]
+  },
+  {
+    "id": "BH-05",
+    "name": "BH-05",
+    "x": 90,
+    "y": 12,
+    "groundElevation": 101.2,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 2.2,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 2.2,
+        "bottomDepth": 8.8,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 8.8,
+        "bottomDepth": 15.8,
+        "soilType": "CL",
+        "color": "#8a9a5b"
+      },
+      {
+        "topDepth": 15.8,
+        "bottomDepth": 21.5,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 21.5,
+        "bottomDepth": 28,
+        "soilType": "SM",
+        "color": "#e0c068"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 4
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 13
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 10
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 12
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 9
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 8
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 10
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 7
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 9
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 7
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 17
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 19
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 16
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 19
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 30
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 32
+      },
+      {
+        "topDepth": 25.5,
+        "bottomDepth": 25.95,
+        "nValue": 34
+      },
+      {
+        "topDepth": 27,
+        "bottomDepth": 27.45,
+        "nValue": 32
+      }
+    ]
+  },
+  {
+    "id": "BH-06",
+    "name": "BH-06",
+    "x": 112,
+    "y": 8,
+    "groundElevation": 101.6,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 1.9,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 1.9,
+        "bottomDepth": 9.2,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 9.2,
+        "bottomDepth": 16.2,
+        "soilType": "CL",
+        "color": "#8a9a5b"
+      },
+      {
+        "topDepth": 16.2,
+        "bottomDepth": 22,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 22,
+        "bottomDepth": 29,
+        "soilType": "風化岩",
+        "color": "hsl(131, 45%, 55%)"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 2
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 11
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 13
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 12
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 8
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 7
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 15
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 17
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 19
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 17
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 50
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 47
+      },
+      {
+        "topDepth": 25.5,
+        "bottomDepth": 25.95,
+        "nValue": 49
+      },
+      {
+        "topDepth": 27,
+        "bottomDepth": 27.45,
+        "nValue": 50
+      }
+    ],
+    "rqd": [
+      {
+        "topDepth": 22,
+        "bottomDepth": 23.5,
+        "rqd": 35
+      },
+      {
+        "topDepth": 23.5,
+        "bottomDepth": 25,
+        "rqd": 43
+      },
+      {
+        "topDepth": 25,
+        "bottomDepth": 26.5,
+        "rqd": 51
+      },
+      {
+        "topDepth": 26.5,
+        "bottomDepth": 28,
+        "rqd": 59
+      },
+      {
+        "topDepth": 28,
+        "bottomDepth": 29,
+        "rqd": 67
+      }
+    ]
+  },
+  {
+    "id": "BH-07",
+    "name": "BH-07",
+    "x": 10,
+    "y": 42,
+    "groundElevation": 100.4,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 1.4,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 1.4,
+        "bottomDepth": 6.6,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 6.6,
+        "bottomDepth": 13,
+        "soilType": "CL",
+        "color": "#8a9a5b"
+      },
+      {
+        "topDepth": 13,
+        "bottomDepth": 18.6,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 18.6,
+        "bottomDepth": 25,
+        "soilType": "SM",
+        "color": "#e0c068"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 11
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 9
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 11
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 13
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 6
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 9
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 6
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 8
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 18
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 16
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 18
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 15
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 31
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 34
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 31
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 33
+      }
+    ]
+  },
+  {
+    "id": "BH-08",
+    "name": "BH-08",
+    "x": 35,
+    "y": 48,
+    "groundElevation": 101,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 2.1,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 2.1,
+        "bottomDepth": 7.2,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 7.2,
+        "bottomDepth": 13.8,
+        "soilType": "CL",
+        "color": "#8a9a5b"
+      },
+      {
+        "topDepth": 13.8,
+        "bottomDepth": 19.2,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 19.2,
+        "bottomDepth": 26,
+        "soilType": "SM",
+        "color": "#e0c068"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 3
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 12
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 9
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 11
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 9
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 7
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 9
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 6
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 8
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 19
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 16
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 18
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 29
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 32
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 34
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 31
+      }
+    ]
+  },
+  {
+    "id": "BH-09",
+    "name": "BH-09",
+    "x": 60,
+    "y": 45,
+    "groundElevation": 101.8,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 1.7,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 1.7,
+        "bottomDepth": 7.8,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 7.8,
+        "bottomDepth": 14.5,
+        "soilType": "CL",
+        "color": "#8a9a5b",
+        "note": "互層:主 CL / 副 ML"
+      },
+      {
+        "topDepth": 14.5,
+        "bottomDepth": 20.2,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 20.2,
+        "bottomDepth": 27,
+        "soilType": "SM",
+        "color": "#e0c068"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 6
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 12
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 9
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 11
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 7
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 9
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 6
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 17
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 19
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 16
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 18
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 30
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 32
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 34
+      },
+      {
+        "topDepth": 25.5,
+        "bottomDepth": 25.95,
+        "nValue": 31
+      }
+    ]
+  },
+  {
+    "id": "BH-10",
+    "name": "BH-10",
+    "x": 85,
+    "y": 50,
+    "groundElevation": 102.5,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 2.3,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 2.3,
+        "bottomDepth": 8.5,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 8.5,
+        "bottomDepth": 15.5,
+        "soilType": "CL",
+        "color": "#8a9a5b"
+      },
+      {
+        "topDepth": 15.5,
+        "bottomDepth": 21,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 28,
+        "soilType": "SM",
+        "color": "#e0c068"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 4
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 13
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 10
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 12
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 9
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 8
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 10
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 7
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 9
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 7
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 17
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 19
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 16
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 33
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 30
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 32
+      },
+      {
+        "topDepth": 25.5,
+        "bottomDepth": 25.95,
+        "nValue": 34
+      },
+      {
+        "topDepth": 27,
+        "bottomDepth": 27.45,
+        "nValue": 32
+      }
+    ]
+  },
+  {
+    "id": "BH-11",
+    "name": "BH-11",
+    "x": 108,
+    "y": 46,
+    "groundElevation": 103.1,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 2,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 2,
+        "bottomDepth": 9,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 16,
+        "soilType": "CL",
+        "color": "#8a9a5b"
+      },
+      {
+        "topDepth": 16,
+        "bottomDepth": 21.8,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 21.8,
+        "bottomDepth": 29,
+        "soilType": "風化岩",
+        "color": "hsl(131, 45%, 55%)"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 2
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 11
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 13
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 12
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 6
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 8
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 7
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 10
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 15
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 17
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 19
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 17
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 50
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 47
+      },
+      {
+        "topDepth": 25.5,
+        "bottomDepth": 25.95,
+        "nValue": 49
+      },
+      {
+        "topDepth": 27,
+        "bottomDepth": 27.45,
+        "nValue": 50
+      }
+    ],
+    "rqd": [
+      {
+        "topDepth": 21.8,
+        "bottomDepth": 23.3,
+        "rqd": 35
+      },
+      {
+        "topDepth": 23.3,
+        "bottomDepth": 24.8,
+        "rqd": 43
+      },
+      {
+        "topDepth": 24.8,
+        "bottomDepth": 26.3,
+        "rqd": 51
+      },
+      {
+        "topDepth": 26.3,
+        "bottomDepth": 27.8,
+        "rqd": 59
+      },
+      {
+        "topDepth": 27.8,
+        "bottomDepth": 29,
+        "rqd": 67
+      }
+    ]
+  },
+  {
+    "id": "BH-12",
+    "name": "BH-12",
+    "x": 55,
+    "y": 75,
+    "groundElevation": 102.2,
+    "layers": [
+      {
+        "topDepth": 0,
+        "bottomDepth": 1.5,
+        "soilType": "SF",
+        "color": "#c9b380"
+      },
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 7,
+        "soilType": "SM",
+        "color": "#e0c068"
+      },
+      {
+        "topDepth": 7,
+        "bottomDepth": 14,
+        "soilType": "CL",
+        "color": "#8a9a5b"
+      },
+      {
+        "topDepth": 14,
+        "bottomDepth": 19.8,
+        "soilType": "ML",
+        "color": "#a89984"
+      },
+      {
+        "topDepth": 19.8,
+        "bottomDepth": 27,
+        "soilType": "SM",
+        "color": "#e0c068"
+      }
+    ],
+    "sptn": [
+      {
+        "topDepth": 1.5,
+        "bottomDepth": 1.95,
+        "nValue": 11
+      },
+      {
+        "topDepth": 3,
+        "bottomDepth": 3.45,
+        "nValue": 9
+      },
+      {
+        "topDepth": 4.5,
+        "bottomDepth": 4.95,
+        "nValue": 11
+      },
+      {
+        "topDepth": 6,
+        "bottomDepth": 6.45,
+        "nValue": 13
+      },
+      {
+        "topDepth": 7.5,
+        "bottomDepth": 7.95,
+        "nValue": 6
+      },
+      {
+        "topDepth": 9,
+        "bottomDepth": 9.45,
+        "nValue": 9
+      },
+      {
+        "topDepth": 10.5,
+        "bottomDepth": 10.95,
+        "nValue": 6
+      },
+      {
+        "topDepth": 12,
+        "bottomDepth": 12.45,
+        "nValue": 8
+      },
+      {
+        "topDepth": 13.5,
+        "bottomDepth": 13.95,
+        "nValue": 10
+      },
+      {
+        "topDepth": 15,
+        "bottomDepth": 15.45,
+        "nValue": 16
+      },
+      {
+        "topDepth": 16.5,
+        "bottomDepth": 16.95,
+        "nValue": 18
+      },
+      {
+        "topDepth": 18,
+        "bottomDepth": 18.45,
+        "nValue": 15
+      },
+      {
+        "topDepth": 19.5,
+        "bottomDepth": 19.95,
+        "nValue": 17
+      },
+      {
+        "topDepth": 21,
+        "bottomDepth": 21.45,
+        "nValue": 34
+      },
+      {
+        "topDepth": 22.5,
+        "bottomDepth": 22.95,
+        "nValue": 31
+      },
+      {
+        "topDepth": 24,
+        "bottomDepth": 24.45,
+        "nValue": 33
+      },
+      {
+        "topDepth": 25.5,
+        "bottomDepth": 25.95,
+        "nValue": 30
+      }
+    ]
+  },
+  {
+    "id": "CH-01",
+    "name": "CH-01",
+    "x": 20,
+    "y": 70,
+    "groundElevation": 101.5,
+    "layers": [],
+    "cptCurve": [
+      {
+        "depth": 0.2,
+        "qc": 2.55
+      },
+      {
+        "depth": 0.4,
+        "qc": 3.07
+      },
+      {
+        "depth": 0.6,
+        "qc": 3.53
+      },
+      {
+        "depth": 0.8,
+        "qc": 3.93
+      },
+      {
+        "depth": 1,
+        "qc": 4.25
+      },
+      {
+        "depth": 1.2,
+        "qc": 4.46
+      },
+      {
+        "depth": 1.4,
+        "qc": 4.57
+      },
+      {
+        "depth": 1.6,
+        "qc": 4.59
+      },
+      {
+        "depth": 1.8,
+        "qc": 4.52
+      },
+      {
+        "depth": 2,
+        "qc": 4.37
+      },
+      {
+        "depth": 2.2,
+        "qc": 4.18
+      },
+      {
+        "depth": 2.4,
+        "qc": 3.95
+      },
+      {
+        "depth": 2.6,
+        "qc": 3.73
+      },
+      {
+        "depth": 2.8,
+        "qc": 3.52
+      },
+      {
+        "depth": 3,
+        "qc": 3.37
+      },
+      {
+        "depth": 3.2,
+        "qc": 3.28
+      },
+      {
+        "depth": 3.4,
+        "qc": 3.28
+      },
+      {
+        "depth": 3.6,
+        "qc": 3.38
+      },
+      {
+        "depth": 3.8,
+        "qc": 3.58
+      },
+      {
+        "depth": 4,
+        "qc": 3.87
+      },
+      {
+        "depth": 4.2,
+        "qc": 4.26
+      },
+      {
+        "depth": 4.4,
+        "qc": 4.72
+      },
+      {
+        "depth": 4.6,
+        "qc": 5.23
+      },
+      {
+        "depth": 4.8,
+        "qc": 5.78
+      },
+      {
+        "depth": 5,
+        "qc": 6.32
+      },
+      {
+        "depth": 5.2,
+        "qc": 6.85
+      },
+      {
+        "depth": 5.4,
+        "qc": 7.33
+      },
+      {
+        "depth": 5.6,
+        "qc": 7.74
+      },
+      {
+        "depth": 5.8,
+        "qc": 8.07
+      },
+      {
+        "depth": 6,
+        "qc": 8.3
+      },
+      {
+        "depth": 6.2,
+        "qc": 8.43
+      },
+      {
+        "depth": 6.4,
+        "qc": 8.46
+      },
+      {
+        "depth": 6.6,
+        "qc": 8.4
+      },
+      {
+        "depth": 6.8,
+        "qc": 8.27
+      },
+      {
+        "depth": 7,
+        "qc": 8.08
+      },
+      {
+        "depth": 7.2,
+        "qc": 7.86
+      },
+      {
+        "depth": 7.4,
+        "qc": 7.63
+      },
+      {
+        "depth": 7.6,
+        "qc": 7.42
+      },
+      {
+        "depth": 7.8,
+        "qc": 7.26
+      },
+      {
+        "depth": 8,
+        "qc": 7.16
+      },
+      {
+        "depth": 8.2,
+        "qc": 7.14
+      },
+      {
+        "depth": 8.4,
+        "qc": 7.22
+      },
+      {
+        "depth": 8.6,
+        "qc": 7.41
+      },
+      {
+        "depth": 8.8,
+        "qc": 7.69
+      },
+      {
+        "depth": 9,
+        "qc": 8.06
+      },
+      {
+        "depth": 9.2,
+        "qc": 8.51
+      },
+      {
+        "depth": 9.4,
+        "qc": 9.01
+      },
+      {
+        "depth": 9.6,
+        "qc": 9.55
+      },
+      {
+        "depth": 9.8,
+        "qc": 10.1
+      },
+      {
+        "depth": 10,
+        "qc": 10.63
+      },
+      {
+        "depth": 10.2,
+        "qc": 11.12
+      },
+      {
+        "depth": 10.4,
+        "qc": 11.54
+      },
+      {
+        "depth": 10.6,
+        "qc": 11.89
+      },
+      {
+        "depth": 10.8,
+        "qc": 12.13
+      },
+      {
+        "depth": 11,
+        "qc": 12.28
+      },
+      {
+        "depth": 11.2,
+        "qc": 12.33
+      },
+      {
+        "depth": 11.4,
+        "qc": 12.28
+      },
+      {
+        "depth": 11.6,
+        "qc": 12.16
+      },
+      {
+        "depth": 11.8,
+        "qc": 11.98
+      },
+      {
+        "depth": 12,
+        "qc": 11.76
+      },
+      {
+        "depth": 12.2,
+        "qc": 11.53
+      },
+      {
+        "depth": 12.4,
+        "qc": 11.32
+      },
+      {
+        "depth": 12.6,
+        "qc": 11.15
+      },
+      {
+        "depth": 12.8,
+        "qc": 11.04
+      },
+      {
+        "depth": 13,
+        "qc": 11.01
+      },
+      {
+        "depth": 13.2,
+        "qc": 11.07
+      },
+      {
+        "depth": 13.4,
+        "qc": 11.23
+      },
+      {
+        "depth": 13.6,
+        "qc": 11.5
+      },
+      {
+        "depth": 13.8,
+        "qc": 11.86
+      },
+      {
+        "depth": 14,
+        "qc": 12.29
+      },
+      {
+        "depth": 14.2,
+        "qc": 12.79
+      },
+      {
+        "depth": 14.4,
+        "qc": 13.33
+      },
+      {
+        "depth": 14.6,
+        "qc": 13.88
+      },
+      {
+        "depth": 14.8,
+        "qc": 14.41
+      },
+      {
+        "depth": 15,
+        "qc": 14.91
+      },
+      {
+        "depth": 15.2,
+        "qc": 15.34
+      },
+      {
+        "depth": 15.4,
+        "qc": 15.7
+      },
+      {
+        "depth": 15.6,
+        "qc": 15.97
+      },
+      {
+        "depth": 15.8,
+        "qc": 16.13
+      },
+      {
+        "depth": 16,
+        "qc": 16.19
+      },
+      {
+        "depth": 16.2,
+        "qc": 16.16
+      },
+      {
+        "depth": 16.4,
+        "qc": 16.05
+      },
+      {
+        "depth": 16.6,
+        "qc": 15.88
+      },
+      {
+        "depth": 16.8,
+        "qc": 15.67
+      },
+      {
+        "depth": 17,
+        "qc": 15.44
+      },
+      {
+        "depth": 17.2,
+        "qc": 15.22
+      },
+      {
+        "depth": 17.4,
+        "qc": 15.04
+      },
+      {
+        "depth": 17.6,
+        "qc": 14.92
+      },
+      {
+        "depth": 17.8,
+        "qc": 14.87
+      },
+      {
+        "depth": 18,
+        "qc": 14.92
+      },
+      {
+        "depth": 18.2,
+        "qc": 15.07
+      },
+      {
+        "depth": 18.4,
+        "qc": 15.32
+      },
+      {
+        "depth": 18.6,
+        "qc": 15.66
+      },
+      {
+        "depth": 18.8,
+        "qc": 16.08
+      },
+      {
+        "depth": 19,
+        "qc": 16.57
+      },
+      {
+        "depth": 19.2,
+        "qc": 17.1
+      },
+      {
+        "depth": 19.4,
+        "qc": 17.65
+      },
+      {
+        "depth": 19.6,
+        "qc": 18.19
+      },
+      {
+        "depth": 19.8,
+        "qc": 18.7
+      },
+      {
+        "depth": 20,
+        "qc": 19.14
+      }
+    ]
+  },
+  {
+    "id": "CH-02",
+    "name": "CH-02",
+    "x": 95,
+    "y": 72,
+    "groundElevation": 103,
+    "layers": [],
+    "cptCurve": [
+      {
+        "depth": 0.2,
+        "qc": 3.59
+      },
+      {
+        "depth": 0.4,
+        "qc": 3.82
+      },
+      {
+        "depth": 0.6,
+        "qc": 3.95
+      },
+      {
+        "depth": 0.8,
+        "qc": 3.98
+      },
+      {
+        "depth": 1,
+        "qc": 3.92
+      },
+      {
+        "depth": 1.2,
+        "qc": 3.78
+      },
+      {
+        "depth": 1.4,
+        "qc": 3.59
+      },
+      {
+        "depth": 1.6,
+        "qc": 3.37
+      },
+      {
+        "depth": 1.8,
+        "qc": 3.14
+      },
+      {
+        "depth": 2,
+        "qc": 2.94
+      },
+      {
+        "depth": 2.2,
+        "qc": 2.77
+      },
+      {
+        "depth": 2.4,
+        "qc": 2.68
+      },
+      {
+        "depth": 2.6,
+        "qc": 2.66
+      },
+      {
+        "depth": 2.8,
+        "qc": 2.74
+      },
+      {
+        "depth": 3,
+        "qc": 2.93
+      },
+      {
+        "depth": 3.2,
+        "qc": 3.21
+      },
+      {
+        "depth": 3.4,
+        "qc": 3.58
+      },
+      {
+        "depth": 3.6,
+        "qc": 4.03
+      },
+      {
+        "depth": 3.8,
+        "qc": 4.54
+      },
+      {
+        "depth": 4,
+        "qc": 5.08
+      },
+      {
+        "depth": 4.2,
+        "qc": 5.62
+      },
+      {
+        "depth": 4.4,
+        "qc": 6.15
+      },
+      {
+        "depth": 4.6,
+        "qc": 6.64
+      },
+      {
+        "depth": 4.8,
+        "qc": 7.07
+      },
+      {
+        "depth": 5,
+        "qc": 7.41
+      },
+      {
+        "depth": 5.2,
+        "qc": 7.65
+      },
+      {
+        "depth": 5.4,
+        "qc": 7.8
+      },
+      {
+        "depth": 5.6,
+        "qc": 7.85
+      },
+      {
+        "depth": 5.8,
+        "qc": 7.8
+      },
+      {
+        "depth": 6,
+        "qc": 7.68
+      },
+      {
+        "depth": 6.2,
+        "qc": 7.5
+      },
+      {
+        "depth": 6.4,
+        "qc": 7.28
+      },
+      {
+        "depth": 6.6,
+        "qc": 7.05
+      },
+      {
+        "depth": 6.8,
+        "qc": 6.83
+      },
+      {
+        "depth": 7,
+        "qc": 6.66
+      },
+      {
+        "depth": 7.2,
+        "qc": 6.55
+      },
+      {
+        "depth": 7.4,
+        "qc": 6.52
+      },
+      {
+        "depth": 7.6,
+        "qc": 6.59
+      },
+      {
+        "depth": 7.8,
+        "qc": 6.76
+      },
+      {
+        "depth": 8,
+        "qc": 7.02
+      },
+      {
+        "depth": 8.2,
+        "qc": 7.38
+      },
+      {
+        "depth": 8.4,
+        "qc": 7.82
+      },
+      {
+        "depth": 8.6,
+        "qc": 8.31
+      },
+      {
+        "depth": 8.8,
+        "qc": 8.85
+      },
+      {
+        "depth": 9,
+        "qc": 9.4
+      },
+      {
+        "depth": 9.2,
+        "qc": 9.94
+      },
+      {
+        "depth": 9.4,
+        "qc": 10.43
+      },
+      {
+        "depth": 9.6,
+        "qc": 10.87
+      },
+      {
+        "depth": 9.8,
+        "qc": 11.22
+      },
+      {
+        "depth": 10,
+        "qc": 11.49
+      },
+      {
+        "depth": 10.2,
+        "qc": 11.65
+      },
+      {
+        "depth": 10.4,
+        "qc": 11.71
+      },
+      {
+        "depth": 10.6,
+        "qc": 11.68
+      },
+      {
+        "depth": 10.8,
+        "qc": 11.57
+      },
+      {
+        "depth": 11,
+        "qc": 11.4
+      },
+      {
+        "depth": 11.2,
+        "qc": 11.18
+      },
+      {
+        "depth": 11.4,
+        "qc": 10.95
+      },
+      {
+        "depth": 11.6,
+        "qc": 10.73
+      },
+      {
+        "depth": 11.8,
+        "qc": 10.55
+      },
+      {
+        "depth": 12,
+        "qc": 10.43
+      },
+      {
+        "depth": 12.2,
+        "qc": 10.39
+      },
+      {
+        "depth": 12.4,
+        "qc": 10.44
+      },
+      {
+        "depth": 12.6,
+        "qc": 10.59
+      },
+      {
+        "depth": 12.8,
+        "qc": 10.84
+      },
+      {
+        "depth": 13,
+        "qc": 11.18
+      },
+      {
+        "depth": 13.2,
+        "qc": 11.61
+      },
+      {
+        "depth": 13.4,
+        "qc": 12.1
+      },
+      {
+        "depth": 13.6,
+        "qc": 12.63
+      },
+      {
+        "depth": 13.8,
+        "qc": 13.18
+      },
+      {
+        "depth": 14,
+        "qc": 13.71
+      },
+      {
+        "depth": 14.2,
+        "qc": 14.22
+      },
+      {
+        "depth": 14.4,
+        "qc": 14.67
+      },
+      {
+        "depth": 14.6,
+        "qc": 15.04
+      },
+      {
+        "depth": 14.8,
+        "qc": 15.32
+      },
+      {
+        "depth": 15,
+        "qc": 15.5
+      },
+      {
+        "depth": 15.2,
+        "qc": 15.57
+      },
+      {
+        "depth": 15.4,
+        "qc": 15.56
+      },
+      {
+        "depth": 15.6,
+        "qc": 15.46
+      },
+      {
+        "depth": 15.8,
+        "qc": 15.29
+      },
+      {
+        "depth": 16,
+        "qc": 15.08
+      },
+      {
+        "depth": 16.2,
+        "qc": 14.86
+      },
+      {
+        "depth": 16.4,
+        "qc": 14.64
+      },
+      {
+        "depth": 16.6,
+        "qc": 14.45
+      },
+      {
+        "depth": 16.8,
+        "qc": 14.31
+      },
+      {
+        "depth": 17,
+        "qc": 14.26
+      },
+      {
+        "depth": 17.2,
+        "qc": 14.29
+      },
+      {
+        "depth": 17.4,
+        "qc": 14.42
+      },
+      {
+        "depth": 17.6,
+        "qc": 14.66
+      },
+      {
+        "depth": 17.8,
+        "qc": 14.98
+      },
+      {
+        "depth": 18,
+        "qc": 15.4
+      },
+      {
+        "depth": 18.2,
+        "qc": 15.88
+      },
+      {
+        "depth": 18.4,
+        "qc": 16.4
+      },
+      {
+        "depth": 18.6,
+        "qc": 16.95
+      },
+      {
+        "depth": 18.8,
+        "qc": 17.49
+      },
+      {
+        "depth": 19,
+        "qc": 18.01
+      },
+      {
+        "depth": 19.2,
+        "qc": 18.46
+      },
+      {
+        "depth": 19.4,
+        "qc": 18.85
+      },
+      {
+        "depth": 19.6,
+        "qc": 19.14
+      },
+      {
+        "depth": 19.8,
+        "qc": 19.34
+      },
+      {
+        "depth": 20,
+        "qc": 19.43
+      }
+    ]
+  }
+];
