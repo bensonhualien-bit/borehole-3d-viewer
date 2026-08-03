@@ -105,10 +105,14 @@ export function SitePlanPlane({ calibration, onPositionChange, origin }: SitePla
       // 「origin.z(北)- centerZ(北)」換算,不是「centerZ - origin.z」,才會跟鑽孔柱子
       // (Scene.tsx 的 localBorehole)用同一套南北方向,兩者才會對齊。
       position={[centerX - origin.x, calibration.groundElevation, origin.z - centerZ]}
-      rotation={[0, -transform.rotation, 0]}
+      // mesh 用 -π/2(正面朝上)時,平面局部 XY 恰好等於「東/北」座標系,
+      // 群組旋轉要用 +rotation 才是把圖片逆時針轉到校準方位;兩個符號必須成對。
+      // 之前是 [+π/2] 搭 [-rotation]:從上方看到的是背面,整張圖變成南北鏡像,
+      // 圖上文字反過來、建物南北顛倒(位置校準仍對,所以一直沒被發現)。
+      rotation={[0, transform.rotation, 0]}
     >
       <mesh
-        rotation={[Math.PI / 2, 0, 0]}
+        rotation={[-Math.PI / 2, 0, 0]}
         onPointerDown={(e) => {
           e.stopPropagation();
           if (calibration.locked) return;
