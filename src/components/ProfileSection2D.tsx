@@ -7,6 +7,7 @@ import { screenToWorld, zoomViewBox, type ViewBox } from "../utils/svgCoords";
 import { boreholeMaxDepth, computeElevationRange } from "../utils/boreholeElevation";
 import { effectiveLayerColor, type SoilStyles } from "../utils/soilStyles";
 import { computeBaseBarWidth, computeBarLayout, type BarWidthSettings } from "../utils/barWidth";
+import { buildCptPolyline, globalQcMax, negativeQcRuns } from "../utils/cptCurve";
 
 // 幾何(柱位/柱寬/點錨)一律走 barLayout(computeBarLayout 算出的疊合並排結果),
 // 視覺比例(字級、線寬、圓半徑、標籤偏移、自動置中邊距)一律走 baseBarWidth——
@@ -131,6 +132,7 @@ export function ProfileSection2D({
   }
 
   const selected = boreholes.filter((b) => selectedBoreholeIds.has(b.id));
+  const qcMax = globalQcMax(boreholes); // 全部鑽孔,不是 selected——與 3D 同一把尺
   const coords = selected.map((b) => ({ id: b.id, x: b.x, y: b.y }));
   const axis = axisMode === "sequential" ? computeSequentialDistanceAxis(coords) : computeProfileAxis(coords);
   const positioned: PositionedBorehole[] = axis.flatMap((entry) => {
@@ -302,7 +304,12 @@ export function ProfileSection2D({
     });
     if (!column) return null;
     const rawDepth = world.y + column.borehole.groundElevation;
-    const depth = snapDepth(rawDepth, column.borehole.layers, depthSnapMode);
+    const depth = snapDepth(
+      rawDepth,
+      column.borehole.layers,
+      depthSnapMode,
+      column.borehole.cptCurve?.map((s) => s.depth),
+    );
     return { boreholeId: column.borehole.id, depth };
   }
 
@@ -428,6 +435,38 @@ export function ProfileSection2D({
                     strokeWidth={viewBox.width * 0.001}
                   />
                 ))}
+                {borehole.layers.length === 0 && borehole.cptCurve && borehole.cptCurve.length >= 2 && qcMax !== null && (() => {
+                  const gEl = borehole.groundElevation;
+                  const maxD = boreholeMaxDepth(borehole);
+                  const pts = buildCptPolyline(borehole.cptCurve, qcMax, lay.w);
+                  const runs = negativeQcRuns(borehole.cptCurve);
+                  return (
+                    <>
+                      <line
+                        x1={lay.x} y1={0 - gEl} x2={lay.x} y2={maxD - gEl}
+                        stroke="#999999"
+                        strokeWidth={viewBox.width * 0.001}
+                      />
+                      <polyline
+                        points={pts.map((p) => `${lay.x + p.offset},${p.depth - gEl}`).join(" ")}
+                        fill="none"
+                        stroke="#0e7490"
+                        strokeWidth={viewBox.width * 0.0015}
+                      />
+                      {runs.map((r, ri) => (
+                        <text
+                          key={ri}
+                          x={lay.x + lay.w * 0.15}
+                          y={(r.topDepth + r.bottomDepth) / 2 - gEl}
+                          fontSize={Math.max(viewBox.height * 0.02, baseBarWidth * 0.4)}
+                          fill="#cc2222"
+                        >
+                          {"0"}
+                        </text>
+                      ))}
+                    </>
+                  );
+                })()}
                 <text
                   x={lay.x}
                   y={-borehole.groundElevation - Math.max(viewBox.height * 0.02, baseBarWidth * 0.4)}

@@ -3,6 +3,7 @@ import { Text } from "@react-three/drei";
 import type { Borehole, SoilLayer } from "../types/borehole";
 import { snapDepth } from "../utils/depthSnap";
 import { effectiveLayerColor, type SoilStyles } from "../utils/soilStyles";
+import { CptCurveLine } from "./CptCurveLine";
 
 // 柱子半徑的基準值,對應舊有的小範圍範例資料;真實場地座標範圍動輒數百公尺,若柱子
 // 還是固定這麼細,預設鏡頭距離下會細到幾乎看不見(反鋸齒直接抹掉),所以粗細改由
@@ -158,9 +159,11 @@ interface BoreholeColumnProps {
   onHover: (info: { layer: SoilLayer | null; borehole: string } | null) => void;
   profilePicking?: ProfilePicking;
   soilStyles: SoilStyles;
+  /** 全場 CPT qc 最大值;null=場上沒有任何 CPT 曲線,不畫折線 */
+  qcMax: number | null;
 }
 
-export function BoreholeColumn({ borehole, radius, onHover, profilePicking, soilStyles }: BoreholeColumnProps) {
+export function BoreholeColumn({ borehole, radius, onHover, profilePicking, soilStyles, qcMax }: BoreholeColumnProps) {
   const { x, y, groundElevation, layers, name, sptn, rqd } = borehole;
   const [isHovered, setIsHovered] = useState(false);
   const scale = radius / BASE_RADIUS;
@@ -179,7 +182,12 @@ export function BoreholeColumn({ borehole, radius, onHover, profilePicking, soil
 
   function computeSnappedDepth(rawDepth: number): number {
     if (!profilePicking) return rawDepth;
-    return snapDepth(rawDepth, layers, profilePicking.depthSnapMode);
+    return snapDepth(
+      rawDepth,
+      layers,
+      profilePicking.depthSnapMode,
+      borehole.cptCurve?.map((s) => s.depth),
+    );
   }
 
   function handleProfilePointerMove(rawDepth: number, clientX: number, clientY: number) {
@@ -212,13 +220,25 @@ export function BoreholeColumn({ borehole, radius, onHover, profilePicking, soil
           />
         ))
       ) : (
-        <CptMarkerColumn
-          borehole={borehole}
-          radius={radius / 2}
-          onHover={handleHover}
-          onProfilePointerMove={profilePicking ? handleProfilePointerMove : undefined}
-          onProfileClick={profilePicking ? handleProfileClick : undefined}
-        />
+        <>
+          <CptMarkerColumn
+            borehole={borehole}
+            radius={radius / 2}
+            onHover={handleHover}
+            onProfilePointerMove={profilePicking ? handleProfilePointerMove : undefined}
+            onProfileClick={profilePicking ? handleProfileClick : undefined}
+          />
+          {qcMax !== null && borehole.cptCurve && borehole.cptCurve.length >= 2 && (
+            <CptCurveLine
+              borehole={borehole}
+              radius={radius}
+              qcMax={qcMax}
+              showValues={isHovered}
+              onProfilePointerMove={profilePicking ? handleProfilePointerMove : undefined}
+              onProfileClick={profilePicking ? handleProfileClick : undefined}
+            />
+          )}
+        </>
       )}
 
       {previewElevation != null && profilePicking && (

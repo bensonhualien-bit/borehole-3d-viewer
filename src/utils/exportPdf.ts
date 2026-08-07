@@ -10,6 +10,7 @@ import type { BarWidthSettings } from "./barWidth";
 import { buildProfileSvg } from "./exportProfileSvg";
 import { buildExportPageSvg, collectLegendItems } from "./exportPageTemplate";
 import { computeProfileAxis, computeSequentialDistanceAxis } from "./profileAxis";
+import { globalQcMax } from "./cptCurve";
 
 // A3 橫式 @ 300 DPI
 const PAGE_W_PX = 4961;
@@ -84,6 +85,7 @@ export async function exportProfilesToPdf(
       soilStyles: page.soilStyles,
       barWidthSettings: page.barWidthSettings,
       drawX: DRAW_X, drawY: DRAW_Y, drawW: DRAW_W, drawH: DRAW_H,
+      qcMax: globalQcMax(page.boreholes),
     });
     // 圖名欄的鑽孔清單要跟畫面上「由左至右」的順序一致,不能沿用 exported 的
     // 資料順序(勾選/匯入順序)——跟 buildProfileSvg 內部算 positioned 用的是

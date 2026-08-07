@@ -11,6 +11,7 @@ import { DEFAULT_BAR_WIDTH_SETTINGS } from "../src/utils/barWidth";
 import type { ProfileData } from "../src/utils/profileStorage";
 import type { BoreholeGroup } from "../src/utils/boreholeGroupStorage";
 import type { SoilStyles } from "../src/utils/soilStyles";
+import type { ModelSettings } from "../src/utils/model/modelSettings";
 
 interface HoleSpec { name: string; x: number; y: number; elev: number; d: [number, number, number, number, number]; rock?: boolean }
 
@@ -196,9 +197,14 @@ export function buildExampleProjectJson(): string {
     { id: "group-north", name: "北側剖面", boreholeIds: BH_SPECS.slice(6).map((s) => s.name) },
   ];
   const soilStyles: SoilStyles = { SF: { color: "#c98f5f" } }; // 展示自訂顏色功能
+  // 展示 3D 實體地層塊:開檔就能看到黏土層的半透明實體
+  const modelSettings: ModelSettings = {
+    extrapolationRatio: 0.1,
+    layerStyles: { "layer-clay": { showSolid: true, opacity: 0.45 } },
+  };
   return serializeProject(
     boreholes, null, profileData,
     { ...DEFAULT_CONTOUR_SETTINGS, interpolator: "kriging", colorMode: "colored" },
-    groups, soilStyles, { ...DEFAULT_BAR_WIDTH_SETTINGS }
+    groups, soilStyles, { ...DEFAULT_BAR_WIDTH_SETTINGS }, modelSettings
   );
 }

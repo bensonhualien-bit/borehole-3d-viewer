@@ -6,6 +6,7 @@ import type { ProfileData } from "./profileStorage";
 import { DEFAULT_CONTOUR_SETTINGS, type ContourSettings } from "./contour/contourSettings";
 import type { BoreholeGroup } from "./boreholeGroupStorage";
 import { DEFAULT_BAR_WIDTH_SETTINGS } from "./barWidth";
+import { DEFAULT_MODEL_SETTINGS } from "./model/modelSettings";
 
 const SAMPLE_BOREHOLES: Borehole[] = [
   {
@@ -67,6 +68,7 @@ describe("serializeProject / parseProjectFile", () => {
       boreholeGroups: SAMPLE_BOREHOLE_GROUPS,
       soilStyles: {},
       barWidthSettings: DEFAULT_BAR_WIDTH_SETTINGS,
+      modelSettings: DEFAULT_MODEL_SETTINGS,
     });
   });
 
@@ -338,5 +340,64 @@ describe("serializeProject / parseProjectFile", () => {
     parsedJson.barWidthSettings = { maxFraction: 0.5, spacingFactor: 0 };
     const parsed = parseProjectFile(JSON.stringify(parsedJson));
     expect(parsed.barWidthSettings).toEqual({ maxFraction: 0.05, spacingFactor: 0.1 });
+  });
+
+  it("falls back to default modelSettings when opening a pre-3D-modeling project file", () => {
+    // 3D 建模功能上線前存的專案檔沒有 modelSettings 欄位;version 維持 1,
+    // 解析時必須回退預設值而不是報「不支援的版本」或讓 undefined 流入 state。
+    const json = serializeProject(
+      SAMPLE_BOREHOLES,
+      null,
+      SAMPLE_PROFILE_DATA,
+      DEFAULT_CONTOUR_SETTINGS,
+      SAMPLE_BOREHOLE_GROUPS,
+      {},
+      DEFAULT_BAR_WIDTH_SETTINGS,
+    );
+    const withoutModelSettings = JSON.parse(json);
+    delete withoutModelSettings.modelSettings;
+    const parsed = parseProjectFile(JSON.stringify(withoutModelSettings));
+    expect(parsed.modelSettings).toEqual(DEFAULT_MODEL_SETTINGS);
+  });
+
+  it("round-trips modelSettings (extrapolation ratio + per-layer solid styles) through save/open", () => {
+    const modelSettings = {
+      extrapolationRatio: 0.2,
+      layerStyles: { "layer-1": { showSolid: true, opacity: 0.6 } },
+    };
+    const json = serializeProject(
+      SAMPLE_BOREHOLES,
+      null,
+      SAMPLE_PROFILE_DATA,
+      DEFAULT_CONTOUR_SETTINGS,
+      SAMPLE_BOREHOLE_GROUPS,
+      {},
+      DEFAULT_BAR_WIDTH_SETTINGS,
+      modelSettings,
+    );
+    const parsed = parseProjectFile(json);
+    expect(parsed.modelSettings).toEqual(modelSettings);
+  });
+
+  it("clamps an invalid modelSettings value from a hand-edited project file instead of passing it through raw", () => {
+    const json = serializeProject(
+      SAMPLE_BOREHOLES,
+      null,
+      SAMPLE_PROFILE_DATA,
+      DEFAULT_CONTOUR_SETTINGS,
+      SAMPLE_BOREHOLE_GROUPS,
+      {},
+      DEFAULT_BAR_WIDTH_SETTINGS,
+    );
+    const parsedJson = JSON.parse(json);
+    parsedJson.modelSettings = {
+      extrapolationRatio: 99,
+      layerStyles: { bad: "nope", ok: { showSolid: true, opacity: 5 } },
+    };
+    const parsed = parseProjectFile(JSON.stringify(parsedJson));
+    expect(parsed.modelSettings).toEqual({
+      extrapolationRatio: 0.3,
+      layerStyles: { ok: { showSolid: true, opacity: 1 } },
+    });
   });
 });

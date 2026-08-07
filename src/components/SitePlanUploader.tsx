@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { SitePlanCalibration } from "../utils/sitePlanStorage";
+import { calibrationToPlacement, placementToCalibration } from "../utils/sitePlanQuickInsert";
 import { nextZoom } from "../utils/zoom";
 
 interface SitePlanUploaderProps {
@@ -9,6 +10,11 @@ interface SitePlanUploaderProps {
   onClear: () => void;
   dragError?: string | null;
   onToggleLock: (locked: boolean) => void;
+  /** 進入快速插入放置模式;payload 為圖片與高程(此時可能還沒有 sitePlan) */
+  onQuickInsert: (payload: { imageDataUrl: string; imageWidth: number; imageHeight: number; elevation: number }) => void;
+  /** 放置模式進行中(按鈕變「取消放置」) */
+  quickInsertActive: boolean;
+  onQuickInsertCancel: () => void;
 }
 
 interface PendingPoint {
@@ -28,7 +34,17 @@ const buttonStyle: React.CSSProperties = {
   color: "#fff",
 };
 
-export function SitePlanUploader({ sitePlan, defaultGroundElevation, onSave, onClear, dragError, onToggleLock }: SitePlanUploaderProps) {
+export function SitePlanUploader({
+  sitePlan,
+  defaultGroundElevation,
+  onSave,
+  onClear,
+  dragError,
+  onToggleLock,
+  onQuickInsert,
+  quickInsertActive,
+  onQuickInsertCancel,
+}: SitePlanUploaderProps) {
   const imgRef = useRef<HTMLImageElement>(null);
   const previewContainerRef = useRef<HTMLDivElement>(null);
   const [imageDataUrl, setImageDataUrl] = useState<string | null>(sitePlan?.imageDataUrl ?? null);
@@ -41,6 +57,46 @@ export function SitePlanUploader({ sitePlan, defaultGroundElevation, onSave, onC
   );
   const [error, setError] = useState<string | null>(null);
   const [zoom, setZoom] = useState(1);
+
+  // 寬度/角度欄:顯示 calibrationToPlacement 反算值,可打字後 Enter/失焦套用。
+  // 用文字 state 而不是直接綁數值:打到一半(例如「12.」)不能立刻套用/覆寫。
+  const [widthText, setWidthText] = useState("");
+  const [angleText, setAngleText] = useState("");
+  const [fieldError, setFieldError] = useState<string | null>(null);
+  useEffect(() => {
+    if (!sitePlan) return;
+    const p = calibrationToPlacement(sitePlan);
+    setWidthText(p.widthMeters.toFixed(1));
+    setAngleText(p.rotationDeg.toFixed(1));
+    setFieldError(null);
+  }, [sitePlan]);
+
+  function commitPlacementFields() {
+    if (!sitePlan || sitePlan.locked) return;
+    const w = Number(widthText);
+    const a = Number(angleText);
+    if (!Number.isFinite(w) || w <= 0) {
+      setFieldError("寬度必須是大於 0 的數字");
+      return;
+    }
+    if (!Number.isFinite(a)) {
+      setFieldError("角度必須是數字");
+      return;
+    }
+    const current = calibrationToPlacement(sitePlan);
+    const next = placementToCalibration(
+      { ...current, widthMeters: w, rotationDeg: a },
+      { dataUrl: sitePlan.imageDataUrl, width: sitePlan.imageWidth, height: sitePlan.imageHeight },
+      sitePlan.groundElevation,
+      sitePlan.locked,
+    );
+    try {
+      onSave(next);
+      setFieldError(null);
+    } catch {
+      setFieldError("圖片太大,請換小一點的圖片再試一次");
+    }
+  }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -127,6 +183,19 @@ export function SitePlanUploader({ sitePlan, defaultGroundElevation, onSave, onC
     }
   }
 
+  const quickInsertReady =
+    imageDataUrl !== null && imageSize !== null && !Number.isNaN(Number(groundElevation)) && groundElevation.trim() !== "";
+
+  function handleQuickInsert() {
+    if (!imageDataUrl || !imageSize) return;
+    onQuickInsert({
+      imageDataUrl,
+      imageWidth: imageSize.width,
+      imageHeight: imageSize.height,
+      elevation: Number(groundElevation),
+    });
+  }
+
   function handleClear() {
     setImageDataUrl(null);
     setImageSize(null);
@@ -206,6 +275,53 @@ export function SitePlanUploader({ sitePlan, defaultGroundElevation, onSave, onC
           style={{ width: "100%", fontSize: 12 }}
         />
       </div>
+
+      <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+        {quickInsertActive ? (
+          <button type="button" onClick={onQuickInsertCancel} style={buttonStyle}>
+            取消放置(Esc)
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleQuickInsert}
+            disabled={!quickInsertReady}
+            style={{ ...buttonStyle, opacity: quickInsertReady ? 1 : 0.45, cursor: quickInsertReady ? "pointer" : "default" }}
+          >
+            快速插入
+          </button>
+        )}
+      </div>
+
+      {sitePlan && (
+        <div style={{ display: "flex", gap: 8, marginBottom: 8, alignItems: "flex-end" }}>
+          <label style={{ fontSize: 12 }}>
+            圖片寬度(m)
+            <input
+              type="text"
+              value={widthText}
+              disabled={sitePlan.locked ?? false}
+              onChange={(e) => setWidthText(e.target.value)}
+              onBlur={commitPlacementFields}
+              onKeyDown={(e) => e.key === "Enter" && commitPlacementFields()}
+              style={{ width: 70, fontSize: 12, display: "block", borderColor: fieldError ? "#ff9d9d" : undefined }}
+            />
+          </label>
+          <label style={{ fontSize: 12 }}>
+            角度(°)
+            <input
+              type="text"
+              value={angleText}
+              disabled={sitePlan.locked ?? false}
+              onChange={(e) => setAngleText(e.target.value)}
+              onBlur={commitPlacementFields}
+              onKeyDown={(e) => e.key === "Enter" && commitPlacementFields()}
+              style={{ width: 60, fontSize: 12, display: "block", borderColor: fieldError ? "#ff9d9d" : undefined }}
+            />
+          </label>
+        </div>
+      )}
+      {fieldError && <div style={{ color: "#ff9d9d", marginBottom: 8 }}>{fieldError}</div>}
 
       {error && <div style={{ color: "#ff9d9d", marginBottom: 8 }}>{error}</div>}
       {dragError && <div style={{ color: "#ff9d9d", marginBottom: 8 }}>{dragError}</div>}

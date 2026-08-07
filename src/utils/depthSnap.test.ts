@@ -22,3 +22,21 @@ describe("snapDepth", () => {
     expect(snapDepth(4.7326, [], "boundary")).toBeCloseTo(4.73, 6);
   });
 });
+
+describe("CPT sample snapping", () => {
+  it("boundary mode with no layers snaps to the nearest cpt sample depth", () => {
+    expect(snapDepth(0.31, [], "boundary", [0.2, 0.4, 0.6])).toBe(0.4);
+    expect(snapDepth(0.29, [], "boundary", [0.2, 0.4, 0.6])).toBe(0.2);
+  });
+  it("free mode ignores cpt samples (stays on 0.01m grid)", () => {
+    expect(snapDepth(0.313, [], "free", [0.2, 0.4])).toBe(0.31);
+  });
+  it("BH holes (non-empty layers) are unaffected by cpt samples", () => {
+    const layers = [{ topDepth: 0, bottomDepth: 5, soilType: "CL", color: "#888" }];
+    expect(snapDepth(4.9, layers, "boundary", [0.2])).toBe(5);
+  });
+  it("empty sample list falls back to the 0.01m grid", () => {
+    expect(snapDepth(0.313, [], "boundary", [])).toBe(0.31);
+    expect(snapDepth(0.313, [], "boundary")).toBe(0.31);
+  });
+});

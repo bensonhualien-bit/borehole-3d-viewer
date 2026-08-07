@@ -25,6 +25,7 @@ const BASE: ProfileSvgInput = {
   soilStyles: {},
   barWidthSettings: DEFAULT_BAR_WIDTH_SETTINGS,
   drawX: 10, drawY: 10, drawW: 333, drawH: 277,
+  qcMax: null,
 };
 
 function attrs(markup: string, tag: string, name: string): number[] {
@@ -357,5 +358,38 @@ describe("buildProfileSvg", () => {
       (l) => Math.abs(l.x1 - higher.x) < 1e-6 && Math.abs(l.y2 - higherHoleTopY) < 1e-6
     );
     expect(higherLine).toBeUndefined();
+  });
+
+  describe("CPT qc curve rendering", () => {
+    const cptHole: Borehole = {
+      id: "CH-01", name: "CH-01", x: 30, y: 0, groundElevation: 10, layers: [],
+      cptCurve: [
+        { depth: 0.2, qc: 5 },
+        { depth: 0.4, qc: -2 },
+        { depth: 0.6, qc: 10 },
+      ],
+    };
+    const input = () => ({
+      boreholes: [
+        H("BH-01", 0, 2.2, [["SF", 3], ["CL", 5], ["SM", 12], ["ML", 5]]),
+        H("BH-02", 120, 1.6, [["non", 2], ["SM", 14], ["CL", 8], ["SM", 15], ["ML", 6]]),
+        cptHole,
+      ],
+      profileLines: [],
+      axisMode: "projected" as const,
+      soilStyles: {},
+      barWidthSettings: DEFAULT_BAR_WIDTH_SETTINGS,
+      drawX: 10, drawY: 10, drawW: 333, drawH: 277,
+    });
+    it("draws a teal polyline and a red negative annotation for CPT holes", () => {
+      const { markup } = buildProfileSvg({ ...input(), qcMax: 10 } as ProfileSvgInput);
+      expect(markup).toContain("#0e7490");
+      expect(markup).toMatch(/fill="#cc2222"[^>]*>0</);
+      expect(markup).toContain("#cc2222");
+    });
+    it("skips curves when qcMax is null", () => {
+      const { markup } = buildProfileSvg({ ...input(), qcMax: null } as ProfileSvgInput);
+      expect(markup).not.toContain("#0e7490");
+    });
   });
 });

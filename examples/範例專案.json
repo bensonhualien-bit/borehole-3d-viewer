@@ -2619,5 +2619,14 @@
   "barWidthSettings": {
     "maxFraction": 0.02,
     "spacingFactor": 0.35
+  },
+  "modelSettings": {
+    "extrapolationRatio": 0.1,
+    "layerStyles": {
+      "layer-clay": {
+        "showSolid": true,
+        "opacity": 0.45
+      }
+    }
   }
 }

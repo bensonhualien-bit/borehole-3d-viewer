@@ -4,11 +4,13 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { ComponentProps } from "react";
 import type { Mesh } from "three";
 import type { Borehole, SoilLayer } from "../types/borehole";
-import { getSitePlanBounds, type SitePlanCalibration } from "../utils/sitePlanStorage";
-import type { ProfileLine } from "../utils/profileStorage";
+import type { SitePlanCalibration } from "../utils/sitePlanStorage";
+import type { ProfileLayer, ProfileLine } from "../utils/profileStorage";
 import { BoreholeColumn, HoverTooltip, type ProfilePicking } from "./BoreholeColumn";
 import { BoreholePoint } from "./BoreholePoint";
 import { SitePlanPlane } from "./SitePlanPlane";
+import { SitePlanPlacement } from "./SitePlanPlacement";
+import type { QuickInsertPlacement } from "../utils/sitePlanQuickInsert";
 import { ProfileLines } from "./ProfileLines";
 import { ElevationGrid } from "./ElevationGrid";
 import { computeElevationRange } from "../utils/boreholeElevation";
@@ -16,6 +18,8 @@ import { ContourSurface } from "./ContourSurface";
 import { pickLegendLine } from "../utils/contour/resolveContourPoints";
 import type { ContourSettings } from "../utils/contour/contourSettings";
 import type { SoilStyles } from "../utils/soilStyles";
+import { LayerSolid } from "./LayerSolid";
+import { resolveLayerStyle, type ModelSettings } from "../utils/model/modelSettings";
 
 // <Canvas camera={{ position: [...] }}> 只在 Canvas 第一次掛載時套用一次相機位置;
 // 之後 boreholes 資料變了(例如匯入新檔案),camera 的實際 position 不會被動更新。
@@ -124,6 +128,7 @@ interface SceneProps {
   boreholes: Borehole[];
   sitePlan: SitePlanCalibration | null;
   onSitePlanMove: (x: number, z: number) => void;
+  onSitePlanCalibrationChange: (c: SitePlanCalibration) => void;
   displayMode: "full" | "points";
   showGrid: boolean;
   profileLines: ProfileLine[];
@@ -135,12 +140,19 @@ interface SceneProps {
   contourSettings: ContourSettings;
   onContourExtentChange?: (extent: { min: number; max: number; lineName: string } | null) => void;
   soilStyles: SoilStyles;
+  profileLayers: ProfileLayer[];
+  modelSettings: ModelSettings;
+  onLayerPinchOutChange?: (layerId: string, ratio: number | null) => void;
+  qcMax: number | null;
+  quickInsert: { imageDataUrl: string; imageWidth: number; imageHeight: number; elevation: number } | null;
+  onQuickInsertPlace: (p: QuickInsertPlacement) => void;
 }
 
 export function Scene({
   boreholes,
   sitePlan,
   onSitePlanMove,
+  onSitePlanCalibrationChange,
   displayMode,
   showGrid,
   profileLines,
@@ -152,6 +164,12 @@ export function Scene({
   contourSettings,
   onContourExtentChange,
   soilStyles,
+  profileLayers,
+  modelSettings,
+  onLayerPinchOutChange,
+  qcMax,
+  quickInsert,
+  onQuickInsertPlace,
 }: SceneProps) {
   const [hoverInfo, setHoverInfo] = useState<{ layer: SoilLayer | null; borehole: string } | null>(null);
   // 這支鑽孔目前正在被剖面點選預覽(尚未確定的深度),以及自由深度模式下使用者
@@ -191,21 +209,19 @@ export function Scene({
   const maxDepth = Math.max(0, ...boreholes.flatMap((b) => b.layers.map((l) => l.bottomDepth)));
   const verticalCenter = avgGroundElevation - maxDepth / 2;
 
-  // 全圖框景範圍:改用「鑽孔 + 已上傳配置圖」實際涵蓋的外接矩形,而不是用單一中心點
+  // 全圖框景範圍:改用「鑽孔」實際涵蓋的外接矩形,而不是用單一中心點
   // 算半徑再加一個固定margin——固定margin對小場地太寬鬆、對大場地又太窄,矩形分佈
   // 不對稱(例如一長條)時單一半徑也會抓不準。外接矩形每邊再乘上 (1+marginRatio) 外擴,
   // 讓邊界跟資料範圍成比例縮放,不論場地大小/形狀都能穩定把所有東西框進初始視角。
-  let minX = Math.min(...boreholes.map((b) => b.x));
-  let maxX = Math.max(...boreholes.map((b) => b.x));
-  let minY = Math.min(...boreholes.map((b) => b.y));
-  let maxY = Math.max(...boreholes.map((b) => b.y));
-  if (sitePlan) {
-    const bounds = getSitePlanBounds(sitePlan);
-    minX = Math.min(minX, bounds.minX);
-    maxX = Math.max(maxX, bounds.maxX);
-    minY = Math.min(minY, bounds.minY);
-    maxY = Math.max(maxY, bounds.maxY);
-  }
+  const minX = Math.min(...boreholes.map((b) => b.x));
+  const maxX = Math.max(...boreholes.map((b) => b.x));
+  const minY = Math.min(...boreholes.map((b) => b.y));
+  const maxY = Math.max(...boreholes.map((b) => b.y));
+  // 框景/場景原點刻意「只看鑽孔」,不含配置圖範圍:配置圖是貼在地面的疊加物,
+  // 若把它算進 bbox,拖曳/縮放/旋轉配置圖都會改變 centerX/centerZ 與 controlsKey,
+  // 導致 OrbitControls 重掛、相機跳回預設視角(0807A 回饋的實際 bug)。代價是
+  // 「初始視角可能框不滿一張特別大的配置圖」——滾輪拉遠即可,遠比每次調整都被
+  // 重置視角好。
   const centerX = (minX + maxX) / 2;
   const centerZ = (minY + maxY) / 2;
   const marginRatio = 0.5;
@@ -284,8 +300,29 @@ export function Scene({
           })()}
         <axesHelper args={[Math.max(horizontalSpread / 2, 10)]} />
 
-        {sitePlan && (
-          <SitePlanPlane calibration={sitePlan} onPositionChange={onSitePlanMove} origin={{ x: centerX, z: centerZ }} />
+        {/* 放置模式期間隱藏舊圖:快速插入是整張替換,幽靈預覽就是新圖;更重要的是舊圖的
+            平移拖曳 pointerup(window listener)會在放置 click 的同一次事件派發裡,用放置前
+            的舊 calibration 覆寫剛存進去的新結果——不渲染就沒有這整類交錯。 */}
+        {sitePlan && !quickInsert && (
+          <SitePlanPlane
+            calibration={sitePlan}
+            onPositionChange={onSitePlanMove}
+            onCalibrationChange={onSitePlanCalibrationChange}
+            origin={{ x: centerX, z: centerZ }}
+          />
+        )}
+
+        {quickInsert && (
+          <SitePlanPlacement
+            imageDataUrl={quickInsert.imageDataUrl}
+            imageWidth={quickInsert.imageWidth}
+            imageHeight={quickInsert.imageHeight}
+            elevation={quickInsert.elevation}
+            // bbox 只含鑽孔,見下方框景註解
+            initialWidthMeters={Math.max(maxX - minX, 10)}
+            origin={{ x: centerX, z: centerZ }}
+            onPlace={onQuickInsertPlace}
+          />
         )}
 
         <ProfileLines
@@ -317,6 +354,38 @@ export function Scene({
             />
           ))}
 
+        {profileLayers
+          .filter(
+            (layer) =>
+              layer.topBoundaryId !== null &&
+              layer.bottomBoundaryId !== null &&
+              resolveLayerStyle(modelSettings, layer.id).showSolid,
+          )
+          .map((layer) => {
+            // 界面線可能已被刪除但地層仍留著參照(profileStorage 的既有容錯慣例是
+            // 跳過失效參照,不視為錯誤),這裡同樣直接不畫。
+            const topLine = profileLines.find((l) => l.id === layer.topBoundaryId);
+            const bottomLine = profileLines.find((l) => l.id === layer.bottomBoundaryId);
+            if (!topLine || !bottomLine) return null;
+            return (
+              <LayerSolid
+                key={layer.id}
+                layer={layer}
+                topLine={topLine}
+                bottomLine={bottomLine}
+                boreholes={boreholes}
+                centerX={centerX}
+                centerZ={centerZ}
+                opacity={resolveLayerStyle(modelSettings, layer.id).opacity}
+                extrapolationRatio={modelSettings.extrapolationRatio}
+                contourSettings={contourSettings}
+                onPinchOutChange={
+                  onLayerPinchOutChange ? (ratio) => onLayerPinchOutChange(layer.id, ratio) : undefined
+                }
+              />
+            );
+          })}
+
         {boreholes.map((b) => {
           // 渲染用的局部座標:實際 Borehole.x/y 保持真實世界座標不變,只有傳給 3D 元件
           // 的這份副本減掉場地中心偏移量,讓幾何頂點的數值維持在小範圍內。
@@ -324,7 +393,7 @@ export function Scene({
           // ——直接塞真實北座標(b.y)會讓「北」被畫在南邊,整個南北顛倒,取負號才對。
           const localBorehole = { ...b, x: b.x - centerX, y: centerZ - b.y };
           const profilePicking: ProfilePicking | undefined =
-            profileModeEnabled && activeLineId
+            profileModeEnabled && activeLineId && !quickInsert
               ? {
                   depthSnapMode,
                   activeLineColor: profileLines.find((l) => l.id === activeLineId)?.color ?? "#ff6b6b",
@@ -356,6 +425,7 @@ export function Scene({
               onHover={setHoverInfo}
               profilePicking={profilePicking}
               soilStyles={soilStyles}
+              qcMax={qcMax}
             />
           ) : (
             <BoreholePoint key={b.id} borehole={localBorehole} radius={pointRadius} onHover={setHoverInfo} />

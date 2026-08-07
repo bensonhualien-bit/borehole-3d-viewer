@@ -6,9 +6,10 @@ import type { Borehole } from "../types/borehole";
 import type { ProfileLine } from "./profileStorage";
 import { computeProfileAxis, computeSequentialDistanceAxis } from "./profileAxis";
 import { computeBaseBarWidth, computeBarLayout, type BarWidthSettings } from "./barWidth";
-import { computeElevationRange } from "./boreholeElevation";
+import { computeElevationRange, boreholeMaxDepth } from "./boreholeElevation";
 import { effectiveLayerColor, type SoilStyles } from "./soilStyles";
 import { escapeXml } from "./exportPageTemplate";
+import { buildCptPolyline, negativeQcRuns } from "./cptCurve";
 
 const LABEL_W = 9;
 const TARGET_FILL = 0.7;
@@ -25,6 +26,7 @@ export interface ProfileSvgInput {
   drawY: number;
   drawW: number;
   drawH: number;
+  qcMax: number | null;
 }
 export interface ProfileSvgResult {
   markup: string;
@@ -32,7 +34,7 @@ export interface ProfileSvgResult {
 }
 
 export function buildProfileSvg(input: ProfileSvgInput): ProfileSvgResult {
-  const { boreholes, profileLines, axisMode, soilStyles, barWidthSettings, drawX, drawY, drawW, drawH } = input;
+  const { boreholes, profileLines, axisMode, soilStyles, barWidthSettings, drawX, drawY, drawW, drawH, qcMax } = input;
   const coords = boreholes.map((b) => ({ id: b.id, x: b.x, y: b.y }));
   const axis = axisMode === "sequential" ? computeSequentialDistanceAxis(coords) : computeProfileAxis(coords);
   const projectedAxis = axisMode === "sequential" ? computeProfileAxis(coords) : axis;
@@ -109,6 +111,17 @@ export function buildProfileSvg(input: ProfileSvgInput): ProfileSvgResult {
     const g = p.borehole.groundElevation;
     for (const layer of p.borehole.layers) {
       parts.push(`<rect x="${X(lay.x) - (lay.w * sx) / 2}" y="${Y(g - layer.topDepth)}" width="${lay.w * sx}" height="${(layer.bottomDepth - layer.topDepth) * sy}" fill="${escapeXml(effectiveLayerColor(layer, soilStyles))}" fill-opacity="0.85" stroke="#333" stroke-width="0.2" />`);
+    }
+    if (p.borehole.layers.length === 0 && p.borehole.cptCurve && p.borehole.cptCurve.length >= 2 && qcMax !== null) {
+      const maxD = boreholeMaxDepth(p.borehole);
+      parts.push(`<line x1="${X(lay.x)}" y1="${Y(g)}" x2="${X(lay.x)}" y2="${Y(g - maxD)}" stroke="#999999" stroke-width="0.2" />`);
+      const pts = buildCptPolyline(p.borehole.cptCurve, qcMax, lay.w)
+        .map((pt) => `${X(lay.x + pt.offset)},${Y(g - pt.depth)}`)
+        .join(" ");
+      parts.push(`<polyline points="${pts}" fill="none" stroke="#0e7490" stroke-width="0.3" />`);
+      for (const r of negativeQcRuns(p.borehole.cptCurve)) {
+        parts.push(`<text x="${X(lay.x + lay.w * 0.15)}" y="${Y(g - (r.topDepth + r.bottomDepth) / 2)}" font-size="${FONT_ELEV}" font-family="sans-serif" fill="#cc2222">${escapeXml("0")}</text>`);
+      }
     }
   });
   // 孔名:置中於柱頂 x,由左至右貪婪分層避免水平重疊,放上層者附虛線引線回柱頂

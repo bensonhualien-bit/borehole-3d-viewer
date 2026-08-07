@@ -5,6 +5,7 @@ import { normalizeContourSettings, type ContourSettings } from "./contour/contou
 import type { BoreholeGroup } from "./boreholeGroupStorage";
 import { normalizeSoilStyles, type SoilStyles } from "./soilStyles";
 import { normalizeBarWidthSettings, type BarWidthSettings } from "./barWidth";
+import { DEFAULT_MODEL_SETTINGS, normalizeModelSettings, type ModelSettings } from "./model/modelSettings";
 
 export interface ProjectFile {
   version: 1;
@@ -15,6 +16,8 @@ export interface ProjectFile {
   boreholeGroups: BoreholeGroup[];
   soilStyles: SoilStyles;
   barWidthSettings: BarWidthSettings;
+  /** 3D 地層建模設定;舊專案檔沒有此欄位,解析時回退預設(version 維持 1) */
+  modelSettings: ModelSettings;
 }
 
 export function serializeProject(
@@ -24,9 +27,11 @@ export function serializeProject(
   contourSettings: ContourSettings,
   boreholeGroups: BoreholeGroup[],
   soilStyles: SoilStyles,
-  barWidthSettings: BarWidthSettings
+  barWidthSettings: BarWidthSettings,
+  // 選填 + 預設值:既有呼叫端/測試不需要跟著改,漏傳也只是存出預設建模設定
+  modelSettings: ModelSettings = DEFAULT_MODEL_SETTINGS
 ): string {
-  const project: ProjectFile = { version: 1, boreholes, sitePlan, profileData, contourSettings, boreholeGroups, soilStyles, barWidthSettings };
+  const project: ProjectFile = { version: 1, boreholes, sitePlan, profileData, contourSettings, boreholeGroups, soilStyles, barWidthSettings, modelSettings };
   return JSON.stringify(project, null, 2);
 }
 
@@ -67,5 +72,7 @@ export function parseProjectFile(json: string): ProjectFile {
     boreholeGroups: Array.isArray(obj.boreholeGroups) ? (obj.boreholeGroups as BoreholeGroup[]) : [],
     soilStyles: normalizeSoilStyles(obj.soilStyles),
     barWidthSettings: normalizeBarWidthSettings(obj.barWidthSettings),
+    // 同 contourSettings:逐欄位驗證/clamp,舊專案檔(無此欄位)回退預設
+    modelSettings: normalizeModelSettings((obj.modelSettings ?? {}) as Partial<ModelSettings>),
   };
 }

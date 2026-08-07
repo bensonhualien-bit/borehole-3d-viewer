@@ -1,20 +1,20 @@
 # 鑽孔柱狀圖 3D 視覺化工具
 
-把地質鑽孔資料(座標、地表高程、地層分層、SPT-N/RQD/CPT)畫成互動式 3D 柱狀圖,可疊加真實廠區配置圖做空間比對,並支援手動繪製地層剖面線、3D 地層等高線曲面、2D 傳統剖面圖檢視與多剖面比對、專案存讀。瀏覽器端執行,不需要伺服器/資料庫。
+把地質鑽孔資料(座標、地表高程、地層分層、SPT-N/RQD/CPT)畫成互動式 3D 柱狀圖,可疊加真實廠區配置圖做空間比對,並支援手動繪製地層剖面線、3D 地層等高線曲面、3D 實體地層建模、2D 傳統剖面圖檢視與多剖面比對、專案存讀。瀏覽器端執行,不需要伺服器/資料庫。
 
-![載入範例專案後的 3D 場景全景,彩色等高線曲面與鑽孔柱狀圖同時顯示](docs/images/hero-3d.png)
+![載入範例專案後的 3D 場景全景:實體地層塊、彩色等高線曲面、鑽孔柱狀圖與 CPT 曲線同時顯示](docs/images/hero-3d.png)
 
-**[線上 Demo](https://bensonhualien-bit.github.io/borehole-3d-viewer/)**
+**[線上 Demo](https://bensonhualien-bit.github.io/borehole-3d-viewer/)** · **[功能視覺導覽](https://bensonhualien-bit.github.io/borehole-3d-viewer/features.html)**
 
 ## About
 
-**Borehole 3D Viewer** is a browser-based 3D/2D visualization tool for geotechnical borehole logs. Import borehole data from CSV/Excel, view soil layers as interactive 3D columns at real-world coordinates, overlay site plans, draw stratum boundary profiles, interpolate 3D layer contour surfaces (TIN / Ordinary Kriging), inspect traditional 2D cross-sections with multi-profile comparison, and export A3 PDF drawings. No server required — everything runs in your browser. **[Live demo](https://bensonhualien-bit.github.io/borehole-3d-viewer/)** · Docs are in Traditional Chinese.
+**Borehole 3D Viewer** is a browser-based 3D/2D visualization tool for geotechnical borehole logs. Import borehole data from CSV/Excel, view soil layers as interactive 3D columns at real-world coordinates, overlay site plans, draw stratum boundary profiles, interpolate 3D layer contour surfaces (TIN / Ordinary Kriging), build translucent 3D solid stratum blocks between boundary surfaces, inspect traditional 2D cross-sections with multi-profile comparison, and export A3 PDF drawings. No server required — everything runs in your browser. **[Live demo](https://bensonhualien-bit.github.io/borehole-3d-viewer/)** · Docs are in Traditional Chinese.
 
 ## 線上 Demo
 
 直接開啟 <https://bensonhualien-bit.github.io/borehole-3d-viewer/>,不需安裝任何軟體;打開就會看到內建的範例鑽孔場景。
 
-想快速看到大部分功能同時運作的樣子,建議從畫面左上角「專案」面板按「開啟專案」,載入本 repo 內的 [`examples/範例專案.json`](examples/範例專案.json)——一份已經畫好 3 條剖面線、黏土層地層群組、Kriging 彩色等高線、自訂顏色與南側/北側比對群組的完整專案。
+想快速看到大部分功能同時運作的樣子,建議從畫面左上角「專案」面板按「開啟專案」,載入本 repo 內的 [`examples/範例專案.json`](examples/範例專案.json)——一份已經畫好 3 條剖面線、黏土層地層群組(含開啟的 3D 半透明實體)、Kriging 彩色等高線、自訂顏色與南側/北側比對群組的完整專案。
 
 ## 快速開始
 
@@ -36,11 +36,15 @@ npm run dev      # 啟動開發伺服器(http://localhost:5173/)
 ![匯入鑽孔資料面板,含成功匯入訊息](docs/images/data-uploader.png)
 
 - **鑽孔資料匯入**:支援 CSV 與 Excel(.xlsx)兩種格式(依副檔名自動判斷),中/英文欄名都吃,CSV 支援 Big5/UTF-8 自動偵測,可下載空白範本,單筆資料錯誤不會中斷整批匯入。Excel 匯入額外支援 SPT-N、RQD、CPT 貫入曲線等鑽探量測資料
-- **3D 鑽孔柱狀圖**:依真實座標與地表高程,把每支鑽孔的分層畫成可旋轉/縮放的 3D 柱子,座標方位跟真實地理南北一致,可以直接跟廠區平面圖對照;滑鼠移到分層上會顯示土質、深度範圍、備註;有 SPT-N/RQD 量測值的鑽孔會額外顯示對應深度的數值標籤;CPT 測點(無分層資料)顯示為半透明灰柱
+- **3D 鑽孔柱狀圖**:依真實座標與地表高程,把每支鑽孔的分層畫成可旋轉/縮放的 3D 柱子,座標方位跟真實地理南北一致,可以直接跟廠區平面圖對照;滑鼠移到分層上會顯示土質、深度範圍、備註;有 SPT-N/RQD 量測值的鑽孔會額外顯示對應深度的數值標籤;CPT 測點顯示為半透明灰柱 + 常駐 qc 貫入曲線(全場統一比例尺、負值以紅色「0」標示),曲線同樣出現在 2D 剖面與匯出 PDF,也可在曲線上點選分層點
 - **地層圖例**:列出目前土質代碼對應的顏色與中文名稱
 - **鑽孔顯示模式切換**:可在「完整柱狀圖」與「簡化點位」間切換,適合鑽孔數量多、只想看分布位置的情境
-- **廠區配置圖疊加**:可上傳廠區配置圖,點選 2 個已知座標的參考點,自動算出縮放/旋轉/位置貼在 3D 場景地面上;支援拖曳微調、鎖定位置,校準結果存在瀏覽器本機
+- **廠區配置圖疊加**:兩種放置方式——「兩點校準」(點選 2 個已知座標參考點,自動算出縮放/旋轉/位置)或「快速插入」(輸入高程後圖片跟著滑鼠、點擊放置);放置後可拖曳平移、右下角把手縮放+旋轉、面板寬度/角度欄精確輸入,支援鎖定位置,校準結果存在瀏覽器本機
+
+![配置圖快速插入:俯視顯示置中貼地的配置圖](docs/images/siteplan-quick-insert.png)
 - **高程參考網格**:3D(垂直網格牆)與 2D 剖面圖(水平參考線)都有,5m 為主線、1m 為次線
+
+![CPT 測點旁的 qc 貫入曲線,hover 顯示數值行](docs/images/cpt-curve.png)
 
 ### 地層剖面線繪製
 
@@ -53,6 +57,17 @@ npm run dev      # 啟動開發伺服器(http://localhost:5173/)
 - **等高線曲面**:任一條已命名的邊界線只要有 3 個以上不共線的點,就能開啟等高線,把這條線內插成依真實高程起伏的 3D 曲面並疊加等值線
 - **內插演算法**:可全域切換「TIN」(Delaunay 三角網,只在鑽孔涵蓋範圍內產生結果、不外插)與「Kriging」(Ordinary Kriging,可外插,變異函數參數可自動擬合或手動覆寫)
 - **顯示模式**:純線段(預設)或依高程漸層上色,等高線間距可自訂
+
+### 3D 地層建模(實體地層塊)
+
+![半透明實體地層塊與 3D 地層建模面板](docs/images/layer-solid.png)
+
+- **實體地層塊**:已指定頂/底界兩條邊界線的「地層」,可在 3D 場景右下角「3D 地層建模」面板一鍵變成有厚度的半透明 3D 實體——頂/底界面各自內插成曲面後封閉成塊,幾何含側面裙邊,多個地層與鑽孔柱可同時透視檢視
+- **每地層獨立控制**:各自的顯示開關與透明度滑桿(10%~100%)
+- **內插法跟隨等高線全域設定**:Kriging(含手動變異函數參數)或 TIN 完全沿用等高線的設定,實體與等高線曲面在鑽孔涵蓋範圍內同值、疊圖可對齊;TIN 模式的實體外插採「邊界值平推」,等高線曲面本身維持不外插
+- **外插範圍可調**:以鑽孔分布對角線的百分比往外延伸(0~30%,預設 10%)
+- **尖滅處理**:內插出「頂界低於底界」的區域厚度自動歸零收斂(不畫翻面),面板顯示尖滅比例提示
+- 相鄰地層可共用同一條邊界線,實體在交界面天然貼合無縫;所有建模設定跟著 localStorage 與專案檔存讀
 
 ### 等高線數值圖例
 
@@ -90,7 +105,7 @@ A3 橫式頁面,含圖框、圖名欄、圖例、雙側高程軸與剖面圖本�
 
 ### 專案存讀
 
-可把目前的鑽孔資料、廠區配置圖校準、剖面線資料、等高線設定、自訂顏色、柱寬設定整包存成一個 `.json` 專案檔下載,之後開啟即可一次還原所有資料與畫面設定;匯入/開啟過的資料會留在瀏覽器 localStorage,重新整理不會消失,面板上也有「重設為範例資料」按鈕可一鍵清空回到內建範例場景。
+可把目前的鑽孔資料、廠區配置圖校準、剖面線資料、等高線設定、3D 地層建模設定、自訂顏色、柱寬設定整包存成一個 `.json` 專案檔下載,之後開啟即可一次還原所有資料與畫面設定;匯入/開啟過的資料會留在瀏覽器 localStorage,重新整理不會消失,面板上也有「重設為範例資料」按鈕可一鍵清空回到內建範例場景。
 
 ## 資料格式
 
@@ -153,6 +168,7 @@ src/
     xlsxImport.ts             # Excel(.xlsx)解析(含 SPT-N/RQD/CPT)
     soilColors.ts             # USCS 土質代碼 → 顏色/名稱對照表
     sitePlanStorage.ts        # 廠區配置圖校準數學 + localStorage 存取
+    sitePlanQuickInsert.ts    # 快速插入:placement ⇄ 校準點互轉、角落把手向量運算
     profileStorage.ts         # 剖面線/地層資料模型 + localStorage 存取
     profileAxis.ts            # 剖面線水平軸計算(投影距離 / 累加直線距離)
     depthSnap.ts               # 深度吸附(地層邊界 / 自由深度 0.01m)邏輯
@@ -172,16 +188,24 @@ src/
       colorScale.ts                     # 高程 → 顏色漸層
       contourSettings.ts                # 等高線設定(間距/顯示模式)+ localStorage 存取
       resolveContourPoints.ts            # 剖面線 → 內插用座標點轉換
+    model/
+      modelSettings.ts               # 3D 地層建模設定(外插比例/每地層開關與透明度)+ localStorage 存取
+      solidGrid.ts                    # 地層實體取樣網格(頂/底兩面共用規格、尖滅歸零)
+      tinExtrapolator.ts               # TIN 外插包裝層(凸包外邊界值平推,只給實體用)
   components/
     Scene.tsx                 # 3D 場景(相機、燈光、格線、高程網格)
     ContourSurface.tsx          # 3D 場景的地層等高線曲面渲染
     contourGeometry.ts            # 等高線曲面/等值線的 THREE.BufferGeometry 建構
+    LayerSolid.tsx                 # 3D 實體地層塊渲染(半透明實體)
+    layerSolidGeometry.ts           # 實體幾何建構(頂面/底面/側面裙邊)
+    LayerModelPanel.tsx              # 3D 地層建模控制面板
     BoreholeColumn.tsx         # 單一鑽孔柱狀圖 + hover 提示 + 剖面點選
     BoreholePoint.tsx           # 簡化點位顯示的單一鑽孔
     SoilLegend.tsx               # 地層圖例面板
     DataUploader.tsx             # 鑽孔資料匯入面板(CSV/Excel)
     SitePlanPlane.tsx             # 廠區配置圖的 3D 貼圖平面(含拖曳/鎖定)
     SitePlanUploader.tsx          # 廠區配置圖上傳/校準/縮放/鎖定面板
+    SitePlanPlacement.tsx         # 快速插入放置模式(半透明預覽跟隨滑鼠)
     DisplayModeToggle.tsx          # 完整柱狀圖/簡化點位 切換面板
     ProfileLines.tsx                # 3D 場景的剖面線繪製(完全圖連線)
     ProfileDrawer.tsx                # 剖面線清單/編輯/地層群組面板
